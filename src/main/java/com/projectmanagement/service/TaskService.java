@@ -40,6 +40,7 @@ public class TaskService {
         response.setTitle(task.getTitle());
         response.setDescription(task.getDescription());
         response.setStatus(task.getStatus().name());
+        response.setPriority(task.getPriority().name()); // ADD THIS LINE
         response.setDeadline(task.getDeadline());
         response.setCreatedAt(task.getCreatedAt());
 
