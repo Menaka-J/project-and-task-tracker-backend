@@ -4,8 +4,6 @@ import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
-import org.springframework.scheduling.config.Task;
-
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +35,7 @@ public class Project {
     private List<ProjectMember> members = new ArrayList<>();
 
     @OneToMany(mappedBy = "project", cascade = CascadeType.ALL)
-    private List<Task> tasks = new ArrayList<>();
+    private List<Task> tasks = new ArrayList<>();  // Make sure this is your Task entity
 
     @PrePersist
     protected void onCreate() {
