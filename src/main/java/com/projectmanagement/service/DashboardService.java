@@ -41,11 +41,11 @@
 //        return new DashboardResponse(totalProjects, totalTasks, completedTasks, pendingTasks);
 //    }
 //}
-
 package com.projectmanagement.service;
 
 import com.projectmanagement.dto.response.DashboardResponse;
 import com.projectmanagement.entity.User;
+import com.projectmanagement.enums.Role;
 import com.projectmanagement.enums.TaskStatus;
 import com.projectmanagement.repository.ProjectRepository;
 import com.projectmanagement.repository.TaskRepository;
@@ -76,14 +76,29 @@ public class DashboardService {
     public DashboardResponse getDashboardStats() {
         User currentUser = getCurrentUser();
 
-        // Get projects where user is a member
-        long totalProjects = projectRepository.findProjectsByUser(currentUser).size();
+        long totalProjects;
+        long totalTasks;
+        long completedTasks;
+        long pendingTasks;
 
-        // Get tasks assigned to this user
-        long totalTasks = taskRepository.countByAssignee(currentUser);
-        long completedTasks = taskRepository.countByAssigneeAndStatus(currentUser, TaskStatus.DONE);
-        long pendingTasks = taskRepository.countByAssigneeAndStatusIn(currentUser,
-                java.util.List.of(TaskStatus.TO_DO, TaskStatus.IN_PROGRESS));
+        // Check if user is ADMIN
+        if (currentUser.getRole() == Role.ADMIN) {
+            // ADMIN sees ALL projects and ALL tasks
+            totalProjects = projectRepository.count();
+            totalTasks = taskRepository.count();
+            completedTasks = taskRepository.countByStatus(TaskStatus.DONE);
+            pendingTasks = taskRepository.countByStatusIn(
+                    java.util.List.of(TaskStatus.TO_DO, TaskStatus.IN_PROGRESS)
+            );
+        } else {
+            // MEMBER only sees their projects and assigned tasks
+            totalProjects = projectRepository.findProjectsByUser(currentUser).size();
+            totalTasks = taskRepository.countByAssignee(currentUser);
+            completedTasks = taskRepository.countByAssigneeAndStatus(currentUser, TaskStatus.DONE);
+            pendingTasks = taskRepository.countByAssigneeAndStatusIn(currentUser,
+                    java.util.List.of(TaskStatus.TO_DO, TaskStatus.IN_PROGRESS)
+            );
+        }
 
         return new DashboardResponse(totalProjects, totalTasks, completedTasks, pendingTasks);
     }
