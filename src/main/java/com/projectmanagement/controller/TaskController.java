@@ -42,4 +42,6 @@ public class TaskController {
     public ResponseEntity<List<TaskResponse>> getTasksByStatus(@PathVariable Long projectId, @PathVariable String status) {
         return ResponseEntity.ok(taskService.getTasksByProjectAndStatus(projectId, status));
     }
+
+
 }
