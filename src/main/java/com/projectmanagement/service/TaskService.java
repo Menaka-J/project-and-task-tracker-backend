@@ -83,6 +83,35 @@ public class TaskService {
 //        return convertToResponse(savedTask);
 //    }
 
+//    public TaskResponse createTask(Long projectId, TaskRequest request) {
+//        User currentUser = getCurrentUser();
+//
+//        Project project = projectRepository.findById(projectId)
+//                .orElseThrow(() -> new RuntimeException("Project not found"));
+//
+//        User assignee = userRepository.findById(request.getAssigneeId())
+//                .orElseThrow(() -> new RuntimeException("Assignee not found"));
+//
+//        Task task = new Task();
+//        task.setTitle(request.getTitle());
+//        task.setDescription(request.getDescription());
+//        task.setDeadline(request.getDeadline());
+//        task.setProject(project);
+//        task.setAssignee(assignee);
+//        task.setCreatedBy(currentUser);
+//        task.setStatus(TaskStatus.TO_DO);
+//
+//        // Add priority
+//        if (request.getPriority() != null) {
+//            task.setPriority(Task.Priority.valueOf(request.getPriority()));
+//        } else {
+//            task.setPriority(Task.Priority.MEDIUM);
+//        }
+//
+//        Task savedTask = taskRepository.save(task);
+//        return convertToResponse(savedTask);
+//    }
+
     public TaskResponse createTask(Long projectId, TaskRequest request) {
         User currentUser = getCurrentUser();
 
@@ -101,16 +130,28 @@ public class TaskService {
         task.setCreatedBy(currentUser);
         task.setStatus(TaskStatus.TO_DO);
 
-        // Add priority
-        if (request.getPriority() != null) {
-            task.setPriority(Task.Priority.valueOf(request.getPriority()));
+        // FIX: Set priority properly
+        System.out.println("Received priority: " + request.getPriority()); // Debug log
+
+        if (request.getPriority() != null && !request.getPriority().isEmpty()) {
+            try {
+                task.setPriority(Task.Priority.valueOf(request.getPriority()));
+                System.out.println("Priority set to: " + request.getPriority());
+            } catch (IllegalArgumentException e) {
+                System.out.println("Invalid priority, setting to MEDIUM");
+                task.setPriority(Task.Priority.MEDIUM);
+            }
         } else {
             task.setPriority(Task.Priority.MEDIUM);
+            System.out.println("No priority provided, setting to MEDIUM");
         }
 
         Task savedTask = taskRepository.save(task);
+        System.out.println("Saved task priority: " + savedTask.getPriority()); // Debug log
+
         return convertToResponse(savedTask);
     }
+
     public List<TaskResponse> getTasksByProject(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
