@@ -61,6 +61,28 @@ public class TaskService {
         return response;
     }
 
+//    public TaskResponse createTask(Long projectId, TaskRequest request) {
+//        User currentUser = getCurrentUser();
+//
+//        Project project = projectRepository.findById(projectId)
+//                .orElseThrow(() -> new RuntimeException("Project not found"));
+//
+//        User assignee = userRepository.findById(request.getAssigneeId())
+//                .orElseThrow(() -> new RuntimeException("Assignee not found"));
+//
+//        Task task = new Task();
+//        task.setTitle(request.getTitle());
+//        task.setDescription(request.getDescription());
+//        task.setDeadline(request.getDeadline());
+//        task.setProject(project);
+//        task.setAssignee(assignee);
+//        task.setCreatedBy(currentUser);
+//        task.setStatus(TaskStatus.TO_DO);
+//
+//        Task savedTask = taskRepository.save(task);
+//        return convertToResponse(savedTask);
+//    }
+
     public TaskResponse createTask(Long projectId, TaskRequest request) {
         User currentUser = getCurrentUser();
 
@@ -79,10 +101,16 @@ public class TaskService {
         task.setCreatedBy(currentUser);
         task.setStatus(TaskStatus.TO_DO);
 
+        // Add priority
+        if (request.getPriority() != null) {
+            task.setPriority(Task.Priority.valueOf(request.getPriority()));
+        } else {
+            task.setPriority(Task.Priority.MEDIUM);
+        }
+
         Task savedTask = taskRepository.save(task);
         return convertToResponse(savedTask);
     }
-
     public List<TaskResponse> getTasksByProject(Long projectId) {
         Project project = projectRepository.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project not found"));
