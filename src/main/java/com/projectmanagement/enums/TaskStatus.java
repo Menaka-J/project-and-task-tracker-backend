@@ -1,4 +1,5 @@
 package com.projectmanagement.enums;
 
-public class TaskStatus {
+public enum TaskStatus {
+    TO_DO, IN_PROGRESS, DONE
 }
