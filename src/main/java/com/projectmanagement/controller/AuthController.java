@@ -38,4 +38,6 @@ public class AuthController {
             return ResponseEntity.badRequest().body("Invalid email or password");
         }
     }
+
+    
 }
