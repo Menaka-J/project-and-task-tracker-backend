@@ -52,4 +52,14 @@ public class Task {
             status = TaskStatus.TO_DO;
         }
     }
+
+    //new
+    // In Task.java entity - add this field
+    public enum Priority {
+        HIGH, MEDIUM, LOW
+    }
+
+    @Enumerated(EnumType.STRING)
+    private Priority priority = Priority.MEDIUM;
+
 }
