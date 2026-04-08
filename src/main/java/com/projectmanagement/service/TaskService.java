@@ -62,15 +62,6 @@ public class TaskService {
         return response;
     }
 
-//    public TaskResponse createTask(Long projectId, TaskRequest request) {
-//        User currentUser = getCurrentUser();
-//
-//        Project project = projectRepository.findById(projectId)
-//                .orElseThrow(() -> new RuntimeException("Project not found"));
-//
-//        User assignee = userRepository.findById(request.getAssigneeId())
-//                .orElseThrow(() -> new RuntimeException("Assignee not found"));
-//
 
 
     public TaskResponse createTask(Long projectId, TaskRequest request) {
