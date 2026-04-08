@@ -71,12 +71,6 @@ public class TaskService {
 //        User assignee = userRepository.findById(request.getAssigneeId())
 //                .orElseThrow(() -> new RuntimeException("Assignee not found"));
 //
-//        Task task = new Task();
-//        task.setTitle(request.getTitle());
-//        task.setDescription(request.getDescription());
-//        task.setDeadline(request.getDeadline());
-//        task.setProject(project);
-//        task.setAssignee(assignee);
 
 
     public TaskResponse createTask(Long projectId, TaskRequest request) {
