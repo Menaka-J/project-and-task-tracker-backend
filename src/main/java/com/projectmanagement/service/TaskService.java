@@ -77,13 +77,6 @@ public class TaskService {
 //        task.setDeadline(request.getDeadline());
 //        task.setProject(project);
 //        task.setAssignee(assignee);
-//        task.setCreatedBy(currentUser);
-//        task.setStatus(TaskStatus.TO_DO);
-//
-//        Task savedTask = taskRepository.save(task);
-//        return convertToResponse(savedTask);
-//    }
-
 
 
     public TaskResponse createTask(Long projectId, TaskRequest request) {
