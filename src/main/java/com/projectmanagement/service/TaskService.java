@@ -62,8 +62,6 @@ public class TaskService {
         return response;
     }
 
-
-
     public TaskResponse createTask(Long projectId, TaskRequest request) {
         User currentUser = getCurrentUser();
 
