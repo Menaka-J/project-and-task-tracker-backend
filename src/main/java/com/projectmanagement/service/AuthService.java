@@ -31,32 +31,6 @@ public class AuthService {
     @Autowired
     private JwtUtils jwtUtils;
 
-//    public AuthResponse register(RegisterRequest request) {
-//        // Check if email already exists
-//        if (userRepository.existsByEmail(request.getEmail())) {
-//            throw new RuntimeException("Email already in use!");
-//        }
-//
-//        // Create new user
-//        User user = new User();
-//        user.setName(request.getName());
-//        user.setEmail(request.getEmail());
-//        user.setPassword(passwordEncoder.encode(request.getPassword()));
-//        user.setRole(Role.MEMBER); // Default role
-//
-//        User savedUser = userRepository.save(user);
-//
-//        // Generate token
-//        Authentication authentication = authenticationManager.authenticate(
-//                new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
-//        );
-//
-//        String jwt = jwtUtils.generateJwtToken(authentication);
-//        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-//
-//        return new AuthResponse(jwt, userDetails.getId(), userDetails.getName(),
-//                userDetails.getEmail(), userDetails.getAuthorities().toString());
-//    }
 
     public AuthResponse register(RegisterRequest request) {
         // Check if email already exists
