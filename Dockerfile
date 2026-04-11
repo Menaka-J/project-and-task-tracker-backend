@@ -1,4 +1,10 @@
-FROM ubuntu:latest
-LABEL authors="Menaka"
+FROM eclipse-temurin:17-jdk-alpine
 
-ENTRYPOINT ["top", "-b"]
+WORKDIR /app
+
+COPY . .
+
+RUN chmod +x mvnw
+RUN ./mvnw clean package -DskipTests
+
+CMD ["java", "-jar", "target/*.jar"]
